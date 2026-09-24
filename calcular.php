@@ -1,67 +1,57 @@
 <?php
-//ENTRADA
-$n1 = (float) $_POST['n1'];
-$n2 = (float) $_POST['n2'];
-//PROCESSAMENTO
-$adicao=$n1 + $n2;
-$subtracao = $n1 +$n2;
-$multiplicacao = $n1 * $n2;
-
-$divisaoValida = $n2 !=0; //atribuir o resultado lógico na variavel
-if ($divisaoValida==true)
-{
-    $divisao=$n1 / $n2;
-    $modulo = $n1 % $n2;
-}
-$potencia = $n1 ** $n2;
-$concatenacao=$n1.$n2; //o ponto ele JUNTA o texto, não soma como numero
-
+    // obter dados
+    $nome  = $_POST['nome'];
+    $total = (float) $_POST['total'];   
+    $idade = (int) $_POST['idade'];
+    if (isset($_POST['cartao']) ) 
+    {
+            $cartao = "sim";
+    }
+    else
+    {
+        $cartao = "nao";
+    }
+    //processamento    
+    $descontoCartao=0;
+    if ($idade==0)    
+    {
+        $descontoIdade=0;
+    }
+    else if ($idade==1)
+    {
+        $descontoIdade=5;
+    }
+    else
+    {
+        $descontoIdade=7;
+    }//fim if da idade
+    if ($cartao=="sim")
+    {
+        $descontoCartao=5;
+    }
+    $valorDescontoIdade=$total * ($descontoIdade/100);
+    $valorDescontoCartao=$total * ($descontoCartao/100);
+    $valorFinal = $total - $valorDescontoIdade - $valorDescontoCartao;    
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operações Aritméticas</title>
-    <link rel="stylesheet" href="style.css">    
+    <title>FARMÁCIA PARACETALOKA</title>
 </head>
 <body>
-    <div class="card">
-        <h1 align="center">Operações Aritméticas</h1>
-        <h2 align="center">Resultados</h1>
+    <div>
+        <h1>FARMÁCIA PARACETALOKA</h1>
         <hr>
-        <!-- apresentar os resultados(SAIDA) que o PHP gerou -->
-        <h3>
-            <?php echo "$n1 + $n2 = $adicao"; ?>
-        </h3>
-        <h3>
-            <?php echo "$n1 - $n2 = $subtracao"; ?>
-        </h3>
-        <h3>
-            <?php echo "$n1 x $n2 = $multiplicacao"; ?>
-        </h3>
-        <h3>
-            <?php
-                if ($divisaoValida==true)
-                {
-                    echo "$n1 ÷ $n2 = ".number_format($divisao,2,',','.') ; 
-                    echo "<br>";
-                    echo "$n1 módulo $n2 = ".number_format($modulo,2,',','.') ; 
-                }
-                else
-                {
-                    echo "<h1>Não há divisão por zero!</h1>";
-                }
-            ?>
-        </h3>
-        <h3>
-            <?php echo "$n1 <sup> $n2 </sup> =".number_format($potencia,2,',','.'); ?>
-        </h3>
-        <h3>
-            <?php echo "$n1 concatenado $n2  = $concatenacao" ?>;
-        </h3>
-        <a href="index.php">Voltar</a>
-    </div>    
-    
+        <h2>Cliente: <?php echo $nome; ?></h2>
+        <h3>Total Pedido: R$ <?php echo  number_format($total,2,",",".") ?></h3>
+        <h4>Desconto pela faixa etária: R$ <?php echo  number_format($valorDescontoIdade,2,",",".") ?></h4>
+        <h4>Desconto pelo cartão fidelidade: R$ <?php echo  number_format($valorDescontoCartao,2,",",".") ?></h4>
+        <h1>Total a Pagar: R$ <?php echo  number_format($valorFinal,2,",",".") ?></h1>
+        <a href="index.html">Voltar</a>
+    </div>
 </body>
 </html>
+
+
