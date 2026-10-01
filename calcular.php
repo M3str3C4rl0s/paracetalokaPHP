@@ -49,6 +49,17 @@
         <h4>Desconto pela faixa etária: R$ <?php echo  number_format($valorDescontoIdade,2,",",".") ?></h4>
         <h4>Desconto pelo cartão fidelidade: R$ <?php echo  number_format($valorDescontoCartao,2,",",".") ?></h4>
         <h1>Total a Pagar: R$ <?php echo  number_format($valorFinal,2,",",".") ?></h1>
+
+        <?php
+    // for: repete uma vez pra cada quantidade de parcelas (1x a 6x),
+    // dividindo o total com desconto já calculado acima
+    for ($parcelas = 1; $parcelas <= 6; $parcelas++) {
+        $valorParcela = $valorFinal / $parcelas;
+        echo $parcelas . "x de R$ " . number_format($valorParcela, 2, ',', '.') . "<br>";
+    }
+?>
+
+
         <a href="index.html">Voltar</a>
     </div>
 </body>
